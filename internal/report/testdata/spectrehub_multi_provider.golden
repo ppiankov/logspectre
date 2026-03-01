@@ -1,0 +1,43 @@
+{
+  "schema": "spectre/v1",
+  "generated_at": "2026-01-01T00:00:00Z",
+  "target": {
+    "type": "aws-account",
+    "id": "multi-scan"
+  },
+  "summary": {
+    "finding_count": 3,
+    "estimated_monthly_cost_usd": 1.56
+  },
+  "findings": [
+    {
+      "provider": "aws",
+      "type": "unread",
+      "resource_id": "/app/unread",
+      "resource_arn": "arn:aws:logs:us-east-1:123456789012:log-group:/app/unread",
+      "stored_bytes": 2000000000,
+      "daily_ingestion_bytes": 100000000,
+      "estimated_monthly_cost_usd": 1.56,
+      "detail": "log group /app/unread has no metric filters or subscriptions"
+    },
+    {
+      "provider": "gcp",
+      "type": "stale_sink",
+      "resource_id": "dead-sink",
+      "stored_bytes": 0,
+      "daily_ingestion_bytes": 0,
+      "estimated_monthly_cost_usd": 0,
+      "detail": "sink dead-sink has exported zero bytes in the lookback period"
+    },
+    {
+      "provider": "azure",
+      "type": "stale",
+      "resource_id": "stale-ws",
+      "resource_arn": "/subscriptions/sub-123/resourceGroups/rg/providers/Microsoft.OperationalInsights/workspaces/stale-ws",
+      "stored_bytes": 0,
+      "daily_ingestion_bytes": 0,
+      "estimated_monthly_cost_usd": 0,
+      "detail": "workspace stale-ws has had no heartbeats in the lookback period"
+    }
+  ]
+}

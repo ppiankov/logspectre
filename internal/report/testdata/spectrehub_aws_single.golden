@@ -1,0 +1,34 @@
+{
+  "schema": "spectre/v1",
+  "generated_at": "2026-01-01T00:00:00Z",
+  "target": {
+    "type": "aws-account",
+    "id": "123456789012"
+  },
+  "summary": {
+    "finding_count": 2,
+    "estimated_monthly_cost_usd": 7.680000000000001
+  },
+  "findings": [
+    {
+      "provider": "aws",
+      "type": "no_retention",
+      "resource_id": "/app/logs",
+      "resource_arn": "arn:aws:logs:us-east-1:123456789012:log-group:/app/logs",
+      "stored_bytes": 5000000000,
+      "daily_ingestion_bytes": 500000000,
+      "estimated_monthly_cost_usd": 7.65,
+      "detail": "log group /app/logs has no retention policy; logs are stored indefinitely"
+    },
+    {
+      "provider": "aws",
+      "type": "stale",
+      "resource_id": "/app/stale",
+      "resource_arn": "arn:aws:logs:us-east-1:123456789012:log-group:/app/stale",
+      "stored_bytes": 1000000000,
+      "daily_ingestion_bytes": 0,
+      "estimated_monthly_cost_usd": 0.03,
+      "detail": "log group /app/stale has had no events in the lookback period"
+    }
+  ]
+}
