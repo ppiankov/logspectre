@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/ppiankov/logspectre/internal/commands"
 )
 
 var (
@@ -12,10 +14,8 @@ var (
 )
 
 func main() {
-	if len(os.Args) > 1 && os.Args[1] == "version" {
-		fmt.Printf("logspectre %s (commit: %s, built: %s)\n", version, commit, date)
-		return
+	if err := commands.Execute(version, commit, date); err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+		os.Exit(1)
 	}
-	fmt.Println("logspectre — Cloud log storage waste auditor")
-	os.Exit(0)
 }
