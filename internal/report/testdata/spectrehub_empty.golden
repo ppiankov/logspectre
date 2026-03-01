@@ -1,0 +1,13 @@
+{
+  "schema": "spectre/v1",
+  "generated_at": "2026-01-01T00:00:00Z",
+  "target": {
+    "type": "aws-account",
+    "id": "123456789012"
+  },
+  "summary": {
+    "finding_count": 0,
+    "estimated_monthly_cost_usd": 0
+  },
+  "findings": []
+}
