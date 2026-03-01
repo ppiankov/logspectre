@@ -55,29 +55,36 @@ func TestScanHelp(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	for _, flag := range []string{"--platform", "--format", "--region", "--idle-days", "--min-cost"} {
+	for _, flag := range []string{"--platform", "--format", "--region", "--idle-days", "--min-cost", "--project", "--subscription"} {
 		if !strings.Contains(out, flag) {
 			t.Errorf("expected %q in help output, got: %s", flag, out)
 		}
 	}
 }
 
-func TestScanDefaultFlags(t *testing.T) {
-	out, _, err := executeCommand("scan")
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+func TestScanDefaultRunsWithoutPanic(t *testing.T) {
+	// With --platform all and no credentials, scan may produce warnings but should not panic.
+	// It may error or succeed depending on environment — we just verify it doesn't crash.
+	_, _, _ = executeCommand("scan")
+}
+
+func TestScanGCPRequiresProject(t *testing.T) {
+	_, _, err := executeCommand("scan", "--platform", "gcp")
+	if err == nil {
+		t.Fatal("expected error when --project is missing for gcp")
 	}
-	if !strings.Contains(out, "not yet implemented") {
-		t.Errorf("expected 'not yet implemented' in output, got: %s", out)
+	if !strings.Contains(err.Error(), "--project is required") {
+		t.Errorf("expected '--project is required' in error, got: %v", err)
 	}
 }
 
-func TestScanValidPlatforms(t *testing.T) {
-	for _, p := range []string{"aws", "gcp", "azure", "all"} {
-		_, _, err := executeCommand("scan", "--platform", p)
-		if err != nil {
-			t.Errorf("platform %q should be valid, got error: %v", p, err)
-		}
+func TestScanAzureRequiresSubscription(t *testing.T) {
+	_, _, err := executeCommand("scan", "--platform", "azure")
+	if err == nil {
+		t.Fatal("expected error when --subscription is missing for azure")
+	}
+	if !strings.Contains(err.Error(), "--subscription is required") {
+		t.Errorf("expected '--subscription is required' in error, got: %v", err)
 	}
 }
 
